@@ -25,15 +25,17 @@ final class ResourceMetadata
     private $iri;
     private $itemOperations;
     private $collectionOperations;
+    private $graphqlQuery;
     private $attributes;
 
-    public function __construct(string $shortName = null, string $description = null, string $iri = null, array $itemOperations = null, array $collectionOperations = null, array $attributes = null)
+    public function __construct(string $shortName = null, string $description = null, string $iri = null, array $itemOperations = null, array $collectionOperations = null, array $attributes = null, array $graphqlQuery = null)
     {
         $this->shortName = $shortName;
         $this->description = $description;
         $this->iri = $iri;
         $this->itemOperations = $itemOperations;
         $this->collectionOperations = $collectionOperations;
+        $this->graphqlQuery = $graphqlQuery;
         $this->attributes = $attributes;
     }
 
@@ -51,8 +53,6 @@ final class ResourceMetadata
      * Returns a new instance with the given short name.
      *
      * @param string $shortName
-     *
-     * @return self
      */
     public function withShortName(string $shortName): self
     {
@@ -74,10 +74,6 @@ final class ResourceMetadata
 
     /**
      * Returns a new instance with the given description.
-     *
-     * @param string $description
-     *
-     * @return self
      */
     public function withDescription(string $description): self
     {
@@ -99,10 +95,6 @@ final class ResourceMetadata
 
     /**
      * Returns a new instance with the given IRI.
-     *
-     * @param string $iri
-     *
-     * @return self
      */
     public function withIri(string $iri): self
     {
@@ -124,10 +116,6 @@ final class ResourceMetadata
 
     /**
      * Returns a new instance with the given item operations.
-     *
-     * @param array $itemOperations
-     *
-     * @return self
      */
     public function withItemOperations(array $itemOperations): self
     {
@@ -149,10 +137,6 @@ final class ResourceMetadata
 
     /**
      * Returns a new instance with the given collection operations.
-     *
-     * @param array $collectionOperations
-     *
-     * @return self
      */
     public function withCollectionOperations(array $collectionOperations): self
     {
@@ -166,9 +150,7 @@ final class ResourceMetadata
      * Gets a collection operation attribute, optionally fallback to a resource attribute.
      *
      * @param string|null $operationName
-     * @param string      $key
      * @param mixed       $defaultValue
-     * @param bool        $resourceFallback
      *
      * @return mixed
      */
@@ -181,9 +163,7 @@ final class ResourceMetadata
      * Gets an item operation attribute, optionally fallback to a resource attribute.
      *
      * @param string|null $operationName
-     * @param string      $key
      * @param mixed       $defaultValue
-     * @param bool        $resourceFallback
      *
      * @return mixed
      */
@@ -197,9 +177,7 @@ final class ResourceMetadata
      *
      * @param array|null  $operations
      * @param string|null $operationName
-     * @param string      $key
      * @param mixed       $defaultValue
-     * @param bool        $resourceFallback
      *
      * @return mixed
      */
@@ -207,6 +185,24 @@ final class ResourceMetadata
     {
         if (null !== $operationName && isset($operations[$operationName][$key])) {
             return $operations[$operationName][$key];
+        }
+
+        if ($resourceFallback && isset($this->attributes[$key])) {
+            return $this->attributes[$key];
+        }
+
+        return $defaultValue;
+    }
+
+    /**
+     * @param mixed $defaultValue
+     *
+     * @return mixed
+     */
+    public function getGraphqlQueryAttribute(string $key, $defaultValue = null, bool $resourceFallback = false)
+    {
+        if (isset($this->graphqlQuery[$key])) {
+            return $this->graphqlQuery[$key];
         }
 
         if ($resourceFallback && isset($this->attributes[$key])) {
@@ -229,8 +225,7 @@ final class ResourceMetadata
     /**
      * Gets an attribute.
      *
-     * @param string $key
-     * @param mixed  $defaultValue
+     * @param mixed $defaultValue
      *
      * @return mixed
      */
@@ -245,15 +240,32 @@ final class ResourceMetadata
 
     /**
      * Returns a new instance with the given attribute.
-     *
-     * @param array $attributes
-     *
-     * @return self
      */
     public function withAttributes(array $attributes): self
     {
         $metadata = clone $this;
         $metadata->attributes = $attributes;
+
+        return $metadata;
+    }
+
+    /**
+     * Gets options of for the GraphQL query.
+     *
+     * @return array|null
+     */
+    public function getGraphqlQuery()
+    {
+        return $this->graphqlQuery;
+    }
+
+    /**
+     * Returns a new instance with the given GraphQL query options.
+     */
+    public function withGraphqlQuery(array $graphqlQuery): self
+    {
+        $metadata = clone $this;
+        $metadata->graphqlQuery = $graphqlQuery;
 
         return $metadata;
     }

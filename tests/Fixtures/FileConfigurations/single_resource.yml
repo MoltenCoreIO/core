@@ -10,6 +10,9 @@
         my_collection_op:
             method: 'POST'
             path: 'the/collection/path'
+    graphqlQuery:
+        normalization_context:
+            groups: ['graphql']
     attributes:
         normalization_context:
             groups: ['default']

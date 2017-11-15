@@ -47,6 +47,7 @@ final class XmlExtractor extends AbstractExtractor
                 'iri' => $this->phpize($resource, 'iri', 'string'),
                 'itemOperations' => $this->getOperations($resource, 'itemOperation'),
                 'collectionOperations' => $this->getOperations($resource, 'collectionOperation'),
+                'graphqlQuery' => $this->getAttributes($resource, 'graphqlQuery')[0] ?? null,
                 'attributes' => $this->getAttributes($resource, 'attribute') ?: null,
                 'properties' => $this->getProperties($resource) ?: null,
             ];
@@ -54,10 +55,7 @@ final class XmlExtractor extends AbstractExtractor
     }
 
     /**
-     * Return the array containing configured operations. Returns NULL if there is no operation configuration.
-     *
-     * @param \SimpleXMLElement $resource
-     * @param string            $operationType
+     * Returns the array containing configured operations. Returns NULL if there is no operation configuration.
      *
      * @return array|null
      */
@@ -72,7 +70,7 @@ final class XmlExtractor extends AbstractExtractor
             return $legacyOperations;
         }
 
-        $operationsParent = $operationType.'s';
+        $operationsParent = "{$operationType}s";
 
         if (!isset($resource->$operationsParent)) {
             return null;
@@ -83,22 +81,12 @@ final class XmlExtractor extends AbstractExtractor
 
     /**
      * Recursively transforms an attribute structure into an associative array.
-     *
-     * @param \SimpleXMLElement $resource
-     * @param string            $elementName
-     *
-     * @return array
      */
     private function getAttributes(\SimpleXMLElement $resource, string $elementName): array
     {
         $attributes = [];
         foreach ($resource->$elementName as $attribute) {
-            if (isset($attribute->attribute[0])) {
-                $value = $this->getAttributes($attribute, 'attribute');
-            } else {
-                $value = XmlUtils::phpize($attribute);
-            }
-
+            $value = isset($attribute->attribute[0]) ? $this->getAttributes($attribute, 'attribute') : XmlUtils::phpize($attribute);
             if (isset($attribute['name'])) {
                 $attributes[(string) $attribute['name']] = $value;
             } else {
@@ -111,10 +99,6 @@ final class XmlExtractor extends AbstractExtractor
 
     /**
      * Gets metadata of a property.
-     *
-     * @param \SimpleXMLElement $resource
-     *
-     * @return array
      */
     private function getProperties(\SimpleXMLElement $resource): array
     {
@@ -142,10 +126,6 @@ final class XmlExtractor extends AbstractExtractor
 
     /**
      * Transforms an XML attribute's value in a PHP value.
-     *
-     * @param \SimpleXMLElement $array
-     * @param string            $key
-     * @param string            $type
      *
      * @return bool|string|null
      */
