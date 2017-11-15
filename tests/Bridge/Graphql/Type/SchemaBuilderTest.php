@@ -57,7 +57,7 @@ class SchemaBuilderTest extends TestCase
                 new Type(
                     $builtinType,
                     false,
-                    'item3' === $resourceClassName ? 'unknownResource' : $resourceClassName
+                    'GraphqlResource3' === $resourceClassName ? 'unknownResource' : $resourceClassName
                 ),
                 "{$builtinType}Description",
                 null,
@@ -87,7 +87,7 @@ class SchemaBuilderTest extends TestCase
                 new Type(
                     $builtinType,
                     false,
-                    'item3' === $resourceClassName ? 'unknownResource' : $resourceClassName
+                    'GraphqlResource3' === $resourceClassName ? 'unknownResource' : $resourceClassName
                 ),
                 "{$builtinType}Description",
                 null,
@@ -105,7 +105,7 @@ class SchemaBuilderTest extends TestCase
         // objectProperty has been skipped.
         /** @var ObjectType $type */
         $type = $queryFields['shortName3']->getType();
-        $this->assertArrayNotHasKey('objectProperty', array_keys($type->getFields()));
+        $this->assertArrayNotHasKey('objectProperty', $type->getFields());
     }
 
     /**
@@ -118,8 +118,8 @@ class SchemaBuilderTest extends TestCase
                 new Type(
                     $builtinType,
                     false,
-                    'item3' === $resourceClassName ? \DateTime::class : $resourceClassName,
-                    Type::BUILTIN_TYPE_OBJECT === $builtinType && 'item3' !== $resourceClassName,
+                    'GraphqlResource3' === $resourceClassName ? \DateTime::class : $resourceClassName,
+                    Type::BUILTIN_TYPE_OBJECT === $builtinType && 'GraphqlResource3' !== $resourceClassName,
                     null,
                     Type::BUILTIN_TYPE_OBJECT === $builtinType ? new Type(Type::BUILTIN_TYPE_STRING, false, $resourceClassName) : null
                 ),
@@ -182,7 +182,7 @@ class SchemaBuilderTest extends TestCase
         $type = $queryFields['shortName3']->getType();
         /** @var ListOfType $objectPropertyFieldType */
         $objectPropertyFieldType = $type->getFields()['objectProperty']->getType();
-        //$this->assertEquals(GraphQLType::nonNull(GraphQLType::string()), $objectPropertyFieldType);
+        $this->assertEquals(GraphQLType::nonNull(GraphQLType::string()), $objectPropertyFieldType);
     }
 
     public function paginationProvider()
@@ -193,7 +193,7 @@ class SchemaBuilderTest extends TestCase
         ];
     }
 
-    private function mockSchemaBuilder($propertyMetadataMockBuilder, bool $paginationEnabled, bool $nullOperation = false): SchemaBuilder
+    private function mockSchemaBuilder($propertyMetadataMockBuilder, bool $paginationEnabled): SchemaBuilder
     {
         $propertyNameCollectionFactoryProphecy = $this->prophesize(PropertyNameCollectionFactoryInterface::class);
         $propertyMetadataFactoryProphecy = $this->prophesize(PropertyMetadataFactoryInterface::class);
