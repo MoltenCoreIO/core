@@ -25,17 +25,17 @@ final class ResourceMetadata
     private $iri;
     private $itemOperations;
     private $collectionOperations;
-    private $graphqlQuery;
+    private $graphql;
     private $attributes;
 
-    public function __construct(string $shortName = null, string $description = null, string $iri = null, array $itemOperations = null, array $collectionOperations = null, array $attributes = null, array $graphqlQuery = null)
+    public function __construct(string $shortName = null, string $description = null, string $iri = null, array $itemOperations = null, array $collectionOperations = null, array $attributes = null, array $graphql = null)
     {
         $this->shortName = $shortName;
         $this->description = $description;
         $this->iri = $iri;
         $this->itemOperations = $itemOperations;
         $this->collectionOperations = $collectionOperations;
-        $this->graphqlQuery = $graphqlQuery;
+        $this->graphql = $graphql;
         $this->attributes = $attributes;
     }
 
@@ -195,14 +195,12 @@ final class ResourceMetadata
     }
 
     /**
-     * @param mixed $defaultValue
-     *
      * @return mixed
      */
-    public function getGraphqlQueryAttribute(string $key, $defaultValue = null, bool $resourceFallback = false)
+    public function getGraphqlAttribute(string $operationName, string $key, $defaultValue = null, bool $resourceFallback = false)
     {
-        if (isset($this->graphqlQuery[$key])) {
-            return $this->graphqlQuery[$key];
+        if (isset($this->graphql[$operationName][$key])) {
+            return $this->graphql[$operationName][$key];
         }
 
         if ($resourceFallback && isset($this->attributes[$key])) {
@@ -254,18 +252,18 @@ final class ResourceMetadata
      *
      * @return array|null
      */
-    public function getGraphqlQuery()
+    public function getGraphql()
     {
-        return $this->graphqlQuery;
+        return $this->graphql;
     }
 
     /**
-     * Returns a new instance with the given GraphQL query options.
+     * Returns a new instance with the given GraphQL options.
      */
-    public function withGraphqlQuery(array $graphqlQuery): self
+    public function withGraphql(array $graphql): self
     {
         $metadata = clone $this;
-        $metadata->graphqlQuery = $graphqlQuery;
+        $metadata->graphql = $graphql;
 
         return $metadata;
     }

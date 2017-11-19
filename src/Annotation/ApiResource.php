@@ -51,7 +51,7 @@ final class ApiResource
     /**
      * @var array
      */
-    public $graphqlQuery = [];
+    public $graphql = [];
 
     /**
      * @var array

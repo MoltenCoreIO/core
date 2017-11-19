@@ -22,7 +22,7 @@ use ApiPlatform\Core\Annotation\ApiResource;
  *     iri="http://example.com/res",
  *     itemOperations={"foo":{"bar"}},
  *     collectionOperations={"bar":{"foo"}},
- *     graphqlQuery={"query"={"normalization_context"={"groups"={"foo", "bar"}}}},
+ *     graphql={"query"={"normalization_context"={"groups"={"foo", "bar"}}}},
  *     attributes={"foo":"bar"}
  * )
  *

@@ -30,14 +30,14 @@ class ApiResourceTest extends TestCase
         $resource->iri = 'http://example.com/res';
         $resource->itemOperations = ['foo' => ['bar']];
         $resource->collectionOperations = ['bar' => ['foo']];
-        $resource->graphqlQuery = ['query' => ['normalization_context' => ['groups' => ['foo', 'bar']]]];
+        $resource->graphql = ['query' => ['normalization_context' => ['groups' => ['foo', 'bar']]]];
         $resource->attributes = ['foo' => 'bar'];
 
         $this->assertSame('shortName', $resource->shortName);
         $this->assertSame('description', $resource->description);
         $this->assertSame('http://example.com/res', $resource->iri);
         $this->assertSame(['bar' => ['foo']], $resource->collectionOperations);
-        $this->assertSame(['query' => ['normalization_context' => ['groups' => ['foo', 'bar']]]], $resource->graphqlQuery);
+        $this->assertSame(['query' => ['normalization_context' => ['groups' => ['foo', 'bar']]]], $resource->graphql);
         $this->assertSame(['foo' => 'bar'], $resource->attributes);
     }
 
@@ -50,7 +50,7 @@ class ApiResourceTest extends TestCase
         $this->assertSame('description', $resource->description);
         $this->assertSame('http://example.com/res', $resource->iri);
         $this->assertSame(['bar' => ['foo']], $resource->collectionOperations);
-        $this->assertSame(['query' => ['normalization_context' => ['groups' => ['foo', 'bar']]]], $resource->graphqlQuery);
+        $this->assertSame(['query' => ['normalization_context' => ['groups' => ['foo', 'bar']]]], $resource->graphql);
         $this->assertSame(['foo' => 'bar'], $resource->attributes);
     }
 }

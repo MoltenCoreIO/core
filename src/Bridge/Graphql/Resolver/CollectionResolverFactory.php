@@ -74,7 +74,7 @@ final class CollectionResolverFactory extends AbstractResolverFactory implements
 
             $context = $this->resourceMetadataFactory
                 ->create($resourceClass)
-                ->getGraphqlQueryAttribute('normalization_context', [], true);
+                ->getGraphqlAttribute('query', 'normalization_context', [], true);
 
             if (!$this->paginationEnabled) {
                 $data = [];

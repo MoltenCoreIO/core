@@ -22,7 +22,7 @@
                 <xsd:element name="property" minOccurs="0" maxOccurs="unbounded" type="property"/>
                 <xsd:element name="itemOperations" minOccurs="0" type="itemOperations"/>
                 <xsd:element name="collectionOperations" minOccurs="0" type="collectionOperations"/>
-                <xsd:element name="graphqlQuery" minOccurs="0" type="graphqlQuery"/>
+                <xsd:element name="graphql" minOccurs="0" type="graphql"/>
             </xsd:sequence>
 
             <xsd:attribute type="xsd:string" name="class" use="required"/>
@@ -57,10 +57,17 @@
         <xsd:attribute type="xsd:string" name="name"/>
     </xsd:complexType>
 
-    <xsd:complexType name="graphqlQuery">
+    <xsd:complexType name="graphql">
+        <xsd:sequence minOccurs="0" maxOccurs="unbounded">
+            <xsd:element name="operation" minOccurs="0" maxOccurs="unbounded" type="operation"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="operation">
         <xsd:sequence maxOccurs="unbounded">
             <xsd:element name="attribute" maxOccurs="unbounded" type="attribute"/>
         </xsd:sequence>
+        <xsd:attribute type="xsd:string" name="name"/>
     </xsd:complexType>
 
     <xsd:complexType name="attribute" mixed="true">

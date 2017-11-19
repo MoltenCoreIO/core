@@ -47,7 +47,7 @@ final class XmlExtractor extends AbstractExtractor
                 'iri' => $this->phpize($resource, 'iri', 'string'),
                 'itemOperations' => $this->getOperations($resource, 'itemOperation'),
                 'collectionOperations' => $this->getOperations($resource, 'collectionOperation'),
-                'graphqlQuery' => $this->getAttributes($resource, 'graphqlQuery')[0] ?? null,
+                'graphql' => $this->getOperations($resource, 'graphql'),
                 'attributes' => $this->getAttributes($resource, 'attribute') ?: null,
                 'properties' => $this->getProperties($resource) ?: null,
             ];
@@ -70,13 +70,14 @@ final class XmlExtractor extends AbstractExtractor
             return $legacyOperations;
         }
 
-        $operationsParent = "{$operationType}s";
+        $graphql = 'graphql' === $operationType;
+        $operationsParent = $graphql ? 'graphql' : "{$operationType}s";
 
         if (!isset($resource->$operationsParent)) {
             return null;
         }
 
-        return $this->getAttributes($resource->$operationsParent, $operationType);
+        return $this->getAttributes($resource->$operationsParent, $graphql ? 'operation' : $operationType);
     }
 
     /**

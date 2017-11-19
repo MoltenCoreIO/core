@@ -43,7 +43,7 @@ class AnnotationResourceMetadataFactoryTest extends TestCase
         $this->assertEquals(['foo' => ['bar' => true]], $metadata->getItemOperations());
         $this->assertEquals(['baz' => ['tab' => false]], $metadata->getCollectionOperations());
         $this->assertEquals(['a' => 1], $metadata->getAttributes());
-        $this->assertEquals(['foo' => 'bar'], $metadata->getGraphqlQuery());
+        $this->assertEquals(['foo' => 'bar'], $metadata->getGraphql());
     }
 
     public function getCreateDependencies()
@@ -55,7 +55,7 @@ class AnnotationResourceMetadataFactoryTest extends TestCase
         $annotation->itemOperations = ['foo' => ['bar' => true]];
         $annotation->collectionOperations = ['baz' => ['tab' => false]];
         $annotation->attributes = ['a' => 1];
-        $annotation->graphqlQuery = ['foo' => 'bar'];
+        $annotation->graphql = ['foo' => 'bar'];
 
         $reader = $this->prophesize(Reader::class);
         $reader->getClassAnnotation(Argument::type(\ReflectionClass::class), ApiResource::class)->willReturn($annotation)->shouldBeCalled();

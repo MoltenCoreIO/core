@@ -23,7 +23,7 @@ class ResourceMetadataTest extends TestCase
 {
     public function testValueObject()
     {
-        $metadata = new ResourceMetadata('shortName', 'desc', 'http://example.com/foo', ['iop1' => ['foo' => 'a'], 'iop2' => ['bar' => 'b']], ['cop1' => ['foo' => 'c'], 'cop2' => ['bar' => 'd']], ['baz' => 'bar'], ['foo' => 'graphql']);
+        $metadata = new ResourceMetadata('shortName', 'desc', 'http://example.com/foo', ['iop1' => ['foo' => 'a'], 'iop2' => ['bar' => 'b']], ['cop1' => ['foo' => 'c'], 'cop2' => ['bar' => 'd']], ['baz' => 'bar'], ['query' => ['foo' => 'graphql']]);
         $this->assertSame('shortName', $metadata->getShortName());
         $this->assertSame('desc', $metadata->getDescription());
         $this->assertSame('http://example.com/foo', $metadata->getIri());
@@ -42,9 +42,9 @@ class ResourceMetadataTest extends TestCase
         $this->assertSame(['baz' => 'bar'], $metadata->getAttributes());
         $this->assertSame('bar', $metadata->getAttribute('baz'));
         $this->assertSame('z', $metadata->getAttribute('notExist', 'z'));
-        $this->assertSame('graphql', $metadata->getGraphqlQueryAttribute('foo'));
-        $this->assertSame('bar', $metadata->getGraphqlQueryAttribute('baz', null, true));
-        $this->assertSame('hey', $metadata->getGraphqlQueryAttribute('notExist', 'hey', true));
+        $this->assertSame('graphql', $metadata->getGraphqlAttribute('query', 'foo'));
+        $this->assertSame('bar', $metadata->getGraphqlAttribute('query','baz', null, true));
+        $this->assertSame('hey', $metadata->getGraphqlAttribute('query', 'notExist', 'hey', true));
     }
 
     /**
@@ -67,7 +67,7 @@ class ResourceMetadataTest extends TestCase
             ['ItemOperations', ['a' => ['b' => 'c']]],
             ['CollectionOperations', ['a' => ['b' => 'c']]],
             ['Attributes', ['a' => ['b' => 'c']]],
-            ['GraphqlQuery', ['a' => ['b' => 'c']]],
+            ['Graphql', ['query' => ['b' => 'c']]],
         ];
     }
 }

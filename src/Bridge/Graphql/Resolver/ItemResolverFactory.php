@@ -89,7 +89,7 @@ final class ItemResolverFactory extends AbstractResolverFactory implements ItemR
                 null,
                 ['graphql' => true] + $this->resourceMetadataFactory
                     ->create($resourceClass)
-                    ->getGraphqlQueryAttribute('normalization_context', [], true)
+                    ->getGraphqlAttribute('query', 'normalization_context', [], true)
             ) : null;
         };
     }
