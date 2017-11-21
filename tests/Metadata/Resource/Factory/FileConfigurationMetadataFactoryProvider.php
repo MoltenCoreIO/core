@@ -38,9 +38,11 @@ abstract class FileConfigurationMetadataFactoryProvider extends TestCase
             'collectionOperations' => [
                 'my_collection_op' => ['method' => 'POST', 'path' => 'the/collection/path'],
             ],
-            'graphqlQuery' => [
-                'normalization_context' => [
-                    AbstractNormalizer::GROUPS => ['graphql'],
+            'graphql' => [
+                'query' => [
+                    'normalization_context' => [
+                        AbstractNormalizer::GROUPS => ['graphql'],
+                    ],
                 ],
             ],
             'iri' => 'someirischema',
@@ -58,7 +60,7 @@ abstract class FileConfigurationMetadataFactoryProvider extends TestCase
             ],
         ];
 
-        foreach (['shortName', 'description', 'itemOperations', 'collectionOperations', 'graphqlQuery', 'iri', 'attributes'] as $property) {
+        foreach (['shortName', 'description', 'itemOperations', 'collectionOperations', 'graphql', 'iri', 'attributes'] as $property) {
             $wither = 'with'.ucfirst($property);
             $resourceMetadata = $resourceMetadata->$wither($metadata[$property]);
         }

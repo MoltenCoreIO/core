@@ -25,13 +25,15 @@
                 <attribute name="path">the/collection/path</attribute>
             </collectionOperation>
         </collectionOperations>
-        <graphqlQuery>
-            <attribute name="normalization_context">
-                <attribute name="groups">
-                    <attribute>graphql</attribute>
+        <graphql>
+            <operation name="query">
+                <attribute name="normalization_context">
+                    <attribute name="groups">
+                        <attribute>graphql</attribute>
+                    </attribute>
                 </attribute>
-            </attribute>
-        </graphqlQuery>
+            </operation>
+        </graphql>
         <attribute name="normalization_context">
             <attribute name="groups">
                 <attribute>default</attribute>

@@ -43,7 +43,7 @@ class ResourceMetadataTest extends TestCase
         $this->assertSame('bar', $metadata->getAttribute('baz'));
         $this->assertSame('z', $metadata->getAttribute('notExist', 'z'));
         $this->assertSame('graphql', $metadata->getGraphqlAttribute('query', 'foo'));
-        $this->assertSame('bar', $metadata->getGraphqlAttribute('query','baz', null, true));
+        $this->assertSame('bar', $metadata->getGraphqlAttribute('query', 'baz', null, true));
         $this->assertSame('hey', $metadata->getGraphqlAttribute('query', 'notExist', 'hey', true));
     }
 
