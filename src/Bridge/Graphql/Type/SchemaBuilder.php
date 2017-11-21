@@ -1,4 +1,4 @@
-<?php
+phpu<?php
 
 /*
  * This file is part of the API Platform project.
